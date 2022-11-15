@@ -26,7 +26,11 @@ const AuthForm = ({ loginScreen = false, onAuthenticate }) => {
   }
 
   function buttonPressHandler() {
-    onAuthenticate({ email: formData.email, password: formData.mobile });
+    onAuthenticate({
+      email: formData.email,
+      password: formData.mobile,
+      name: formData.fullName,
+    });
   }
 
   const replace = loginScreen ? "SignUp" : "LogIn";
