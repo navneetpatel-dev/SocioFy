@@ -9,7 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import AuthenticatedStack from "./App/components/Navigators/AuthenticatedStack";
 import AuthStack from "./App/components/Navigators/AuthStack";
-import AuthContextProvider, { AuthContext } from "./store/auth-context";
+import AuthContextProvider from "./store/auth-context";
 
 // Global
 LogBox.ignoreLogs([
@@ -17,30 +17,31 @@ LogBox.ignoreLogs([
 ]);
 SplashScreen.preventAutoHideAsync();
 
-function Navigation() {
-  const authCtx = useContext(AuthContext);
+function Navigation({ showHomeScreen }) {
   return (
     <NavigationContainer>
-      {authCtx.showHomeScreen ? <AuthenticatedStack /> : <AuthStack />}
+      {showHomeScreen ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
 
 function Root() {
-  const { showHomeScreen, setHomeScreen } = useContext(AuthContext);
+  const [showHomeScreen, setshowHomeScreen] = useState(false);
+
   let Component = "";
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setHomeScreen(true);
+        setshowHomeScreen(true);
       } else {
+        setshowHomeScreen(false);
       }
     });
   }, []);
 
   if (showHomeScreen) {
-    Component = <Navigation />;
+    Component = <Navigation showHomeScreen />;
     SplashScreen.hideAsync()
       .then(() => {})
       .catch(() => {});

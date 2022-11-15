@@ -15,7 +15,7 @@ export default function AuthenticatedStack() {
 
   async function logOutHandler() {
     await auth.signOut();
-    authCtx.setHomeScreen(false);
+    // authCtx.setHomeScreen(false);
   }
 
   return (

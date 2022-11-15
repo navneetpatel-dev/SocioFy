@@ -5,11 +5,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import AuthForm from "../components/AuthForm";
 import LoadingOverlay from "./../components/ui/LoadingOverlay";
 import { auth } from "./../../firebase";
-import { AuthContext } from "../../store/auth-context";
 
 const SignUp = ({ navigation }) => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const authCtx = useContext(AuthContext);
 
   async function signUpHandler({ email, password, name }) {
     try {
@@ -19,7 +17,6 @@ const SignUp = ({ navigation }) => {
         email,
         password
       );
-      authCtx.setHomeScreen(true);
       setIsAuthenticating(false);
     } catch (error) {
       setIsAuthenticating(false);
